@@ -42,7 +42,7 @@ async function sendRawTx(url, signedData){
 
 }
 
-async function sendTx({data, nonce, privateKey, value, gasLimit, to, rpcUrl}){
+async function sendTx({data, nonce, privateKey, value, gasLimit, to, rpcUrl, gasPrice}){
   try {
     privateKey = Buffer.from(privateKey, 'hex')
     // let gasPrice = await getGasPrices(GAS_PRICE_SPEED_TYPE);
@@ -50,7 +50,7 @@ async function sendTx({data, nonce, privateKey, value, gasLimit, to, rpcUrl}){
       data,
       value: Web3Utils.toHex(Web3Utils.toWei(value)),
       nonce: Web3Utils.toHex(nonce),
-      gasPrice: Web3Utils.toHex(Web3Utils.toWei('1', 'gwei')),
+      gasPrice: Web3Utils.toHex(Web3Utils.toWei(gasPrice, 'gwei')),
       gasLimit:  Web3Utils.toHex(gasLimit),
       to: to,
     }

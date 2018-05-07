@@ -14,6 +14,7 @@ const {
   TIMES
 } = process.env;
 let poa20 = new web3Foreign.eth.Contract(POA20ABI, POA20_ADDRESS);
+// let {nonce} = require('./foreign_nonce.json')
 
 async function main() {
   let nonce = await getNonce({web3: web3Foreign, address: SENDER_ADDRESS });
@@ -26,9 +27,14 @@ async function main() {
       value: '0',
       gasLimit: '251000',
       to: POA20_ADDRESS,
-      rpcUrl: FOREIGN_RPC_URL
+      rpcUrl: FOREIGN_RPC_URL,
+      gasPrice: '21'
+
     })
     nonce += 1;
   }
+  fs.writeFileSync('./foreign_nonce.json', JSON.stringify({
+    nonce,
+  }) ,null,4);
 }
 main();
